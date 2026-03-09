@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html lang="la">
+<head>
+    <meta charset="UTF-8">
+    <title>SYSTEMA 024 | Coccinella & Aranea</title>
+    <style>
+        :root {
+            --bg: #202124; --panel: #292a2d; --border: #3c4043;
+            --accent: #1a73e8; --text: #e8eaed; --btn-bg: #303134;
+        }
+        body {
+            background-color: var(--bg); color: var(--text);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            margin: 0; display: flex; justify-content: center; align-items: center;
+            height: 100vh; overflow: hidden;
+        }
+        .main-container {
+            display: flex; gap: 20px; background: var(--panel);
+            padding: 25px; border-radius: 8px; border: 1px solid var(--border);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.5); width: 900px; position: relative;
+        }
+        #spider {
+            position: absolute; width: 10px; height: 10px; background: #000;
+            border-radius: 50%; z-index: 1000; pointer-events: none;
+            box-shadow: 0 0 10px var(--accent); transition: 0.05s linear;
+        }
+        #ladybug {
+            position: absolute; width: 20px; height: 20px;
+            background: radial-gradient(circle at 6px 6px, #ff4b2b, #8b0000);
+            border-radius: 50%; z-index: 101; transition: all 3.5s ease-in-out;
+        }
+        .side-panel { width: 180px; display: flex; flex-direction: column; gap: 12px; }
+        .val-display { 
+            background: #171717; border: 1px solid var(--accent); 
+            padding: 15px; text-align: center; font-size: 1.8em; 
+            color: var(--accent); border-radius: 6px;
+        }
+        .btn-n { 
+            background: var(--btn-bg); border: 1px solid var(--border); 
+            color: var(--text); padding: 15px; cursor: pointer; border-radius: 4px;
+        }
+        .btn-commit { 
+            background: var(--accent); color: white; border: none; 
+            padding: 15px; cursor: pointer; width: 100%; border-radius: 6px;
+            font-weight: bold; margin-top: 10px;
+        }
+        .footer {
+            position: absolute; bottom: -35px; width: 100%; text-align: center;
+            font-size: 0.7em; color: #5f6368; letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div id="spider"></div><div id="ladybug"></div>
+    <div class="main-container">
+        <div class="side-panel">
+            <div class="val-display" id="disp-a">0</div>
+            <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap: 5px;">
+                <button class="btn-n" onclick="press('a','1')">1</button><button class="btn-n" onclick="press('a','2')">2</button><button class="btn-n" onclick="press('a','3')">3</button>
+                <button class="btn-n" style="color:red" onclick="clr('a')">C</button><button class="btn-n" onclick="press('a','0')">0</button>
+            </div>
+        </div>
+        <div style="flex-grow:1; text-align:center;">
+            <div style="color:#9aa0a6; margin-bottom:10px;">SYSTEMA 024 | VITA LOGICA</div>
+            <div style="background:#171717; height:150px; border:1px solid var(--border); border-radius:6px; padding:20px;">
+                <div style="font-size:0.8em; color:#9aa0a6">RESULTAT (A+B)²</div>
+                <div id="res" style="font-size:2em; color:var(--accent); margin-top:20px;">0</div>
+            </div>
+            <button class="btn-commit">COMMIT IN ARCHIVUM</button>
+            <div class="footer">PROJECT 024 | EVOLVED WITH <span style="color:var(--accent)">GOOGLE GEMINI AI</span></div>
+        </div>
+        <div class="side-panel">
+            <div class="val-display" id="disp-b">0</div>
+            <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap: 5px;">
+                <button class="btn-n" onclick="press('b','1')">1</button><button class="btn-n" onclick="press('b','2')">2</button><button class="btn-n" onclick="press('b','3')">3</button>
+                <button class="btn-n" style="color:red" onclick="clr('b')">C</button><button class="btn-n" onclick="press('b','0')">0</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        let a="", b="";
+        document.addEventListener('mousemove', (e) => {
+            document.getElementById('spider').style.left = e.pageX + 'px';
+            document.getElementById('spider').style.top = e.pageY + 'px';
+        });
+        function moveLady() {
+            document.getElementById('ladybug').style.left = Math.random()*90+'vw';
+            document.getElementById('ladybug').style.top = Math.random()*90+'vh';
+        }
+        setInterval(moveLady, 3000); moveLady();
+        function press(s, n) { if(s==='a') a+=n; else b+=n; update(); }
+        function clr(s) { if(s==='a') a=""; else b=""; update(); }
+        function update() {
+            document.getElementById('disp-a').innerText = a || "0";
+            document.getElementById('disp-b').innerText = b || "0";
+            if(a && b) document.getElementById('res').innerText = Math.pow(parseFloat(a)+parseFloat(b), 2);
+        }
+    </script>
+</body>
+</html>
